@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Org.Kevoree.Annotation;
 using Org.Kevoree.Core.Api;
+using Org.Kevoree.Log.Api;
 
 namespace Org.Kevoree.Library
 {
@@ -14,11 +15,32 @@ namespace Org.Kevoree.Library
     {
         [KevoreeInject]
         private Context context;
+        private bool allowPrint;
+
+        [KevoreeInject]
+        private ILogger logger;
+
+        [Start]
+        public void Start()
+        {
+            this.allowPrint = true;
+            logger.Debug("Start");
+        }
+
+        [Stop]
+        public void Stop()
+        {
+            this.allowPrint = false;
+            logger.Debug("stop");
+        }
 
         [Input]
         public void input(object msg)
         {
-            Console.WriteLine(context.getInstanceName() + ">" + msg);
+            if (this.allowPrint)
+            {
+                Console.WriteLine(context.getInstanceName() + ">" + msg);
+            }
         }
     }
 }
