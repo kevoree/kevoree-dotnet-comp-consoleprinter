@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Org.Kevoree.Annotation;
 using Org.Kevoree.Core.Api;
 using Org.Kevoree.Log.Api;
+using System.ComponentModel.Composition;
 
 namespace Org.Kevoree.Library
 {
     [ComponentType]
     [Serializable]
+    [Export(typeof(DeployUnit))]
     public class ConsolePrinter : MarshalByRefObject, DeployUnit
     {
         [KevoreeInject]
